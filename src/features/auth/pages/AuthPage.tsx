@@ -27,7 +27,7 @@ export default function AuthPage() {
           <div className="text-3xl font-semibold text-[#1B212D]">{title}</div>
           <div className="text-[#78778B]">Welcome back! Please enter your details</div>
         </div>
-        <AuthForm mode={mode} />
+        <AuthForm mode={mode} setMode={setMode} />
       </div>
     </AuthLayout>
   );
