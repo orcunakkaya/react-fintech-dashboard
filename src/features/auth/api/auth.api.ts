@@ -21,6 +21,18 @@ export type RegisterResponse = {
   };
 };
 
+export type Profile = {
+  id: string;
+  fullName: string;
+  email: string;
+  role: string;
+  isActive: boolean;
+  lastLoginAt: string;
+  lastLoginIP: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type LoginResponse = {
   success: boolean;
   message: string;
@@ -47,5 +59,10 @@ export async function registerUser(body: RegisterBody) {
 
 export async function loginUser(body: LoginBody) {
   const res = await http.post<LoginResponse>("/users/login", body);
+  return res.data;
+}
+
+export async function getProfile() {
+  const res = await http.get<Profile>("/users/profile");
   return res.data;
 }
