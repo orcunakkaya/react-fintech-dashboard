@@ -33,6 +33,11 @@ export type Profile = {
   updatedAt: string;
 };
 
+type ProfileApiResponse = {
+  success: boolean;
+  data: Profile;
+};
+
 export type LoginResponse = {
   success: boolean;
   message: string;
@@ -62,7 +67,7 @@ export async function loginUser(body: LoginBody) {
   return res.data;
 }
 
-export async function getProfile() {
-  const res = await http.get<Profile>("/users/profile");
-  return res.data;
+export async function getProfile(): Promise<Profile> {
+  const res = await http.get<ProfileApiResponse>("/users/profile");
+  return res.data.data;
 }

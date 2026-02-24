@@ -1,47 +1,37 @@
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import Button from "@/shared/ui/Button";
-import { useProfile } from "@/features/auth/hooks/useProfile";
-import { logout } from "@/features/auth/store/auth.actions";
+import DashboardLayout from "@/app/layouts/DashboardLayout";
 
 export default function DashboardPage() {
-  const navigate = useNavigate();
-  const profile = useProfile();
-
-  const handleLogout = () => {
-    logout();
-    toast.success("Logged out");
-    navigate("/auth", { replace: true });
-  };
-
   return (
-    <div className="min-h-screen p-6">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-xl font-semibold">Dashboard</h1>
+    <DashboardLayout>
+      <div className="grid gap-6 xl:grid-cols-[1fr_360px]">
+        {/* LEFT BLOCK */}
+        <section className="flex flex-col gap-6">
+          {/* Summary cards (only inside left block) */}
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div className="h-40 p-6 bg-white border rounded-2xl">Summary 1</div>
+            <div className="h-40 p-6 bg-white border rounded-2xl">Summary 2</div>
+            <div className="h-40 p-6 bg-white border rounded-2xl">Summary 3</div>
+          </div>
 
-          {profile.isLoading ? (
-            <p className="mt-2 text-sm text-gray-500">Loading profile...</p>
-          ) : profile.isError ? (
-            <p className="mt-2 text-sm text-red-600">Profile could not be loaded</p>
-          ) : (
-            <p className="mt-2 text-sm text-gray-600">
-              {profile.data.fullName} • {profile.data.email}
-            </p>
-          )}
-        </div>
+          {/* Working Capital */}
+          <div className="p-6 bg-white border h-80 rounded-2xl">
+            Working Capital Chart
+          </div>
 
-        <div className="w-[160px]">
-          <Button type="button" onClick={handleLogout}>
-            Logout
-          </Button>
-        </div>
+          {/* Recent Transactions */}
+          <div className="p-6 bg-white border h-80 rounded-2xl">
+            Recent Transactions
+          </div>
+        </section>
+
+        {/* RIGHT BLOCK */}
+        <aside className="flex flex-col gap-6">
+          <div className="h-56 p-6 bg-white border rounded-2xl">My Wallet</div>
+          <div className="h-56 p-6 bg-white border rounded-2xl">
+            Scheduled Transfers
+          </div>
+        </aside>
       </div>
-
-      {/* Dashboard content later */}
-      <div className="p-4 mt-8 text-sm text-gray-600 border rounded-xl">
-        Dashboard widgets will be here.
-      </div>
-    </div>
+    </DashboardLayout>
   );
 }
