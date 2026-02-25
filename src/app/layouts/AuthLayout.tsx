@@ -8,16 +8,13 @@ type AuthLayoutProps = {
 export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <div className="min-h-screen bg-white">
-      {/* full width, but ratio-based columns on md+ */}
       <div className="grid min-h-screen grid-cols-1 md:grid-cols-[765fr_675fr]">
-        {/* Left */}
         <div className="flex items-center justify-center px-6 py-10 md:justify-start md:px-0 md:py-0">
           <div className="w-full max-w-md md:w-101 md:max-w-none md:ml-[calc((100%-404px)*0.374)]">
             {children}
           </div>
         </div>
 
-        {/* Right */}
         <div className="relative hidden md:block bg-[#E6E6E6]">
           <img
             src={heroImage}

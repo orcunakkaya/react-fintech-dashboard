@@ -9,7 +9,7 @@ type Props = { children: ReactNode };
 export default function DashboardLayout({ children }: Props) {
     const [mobileOpen, setMobileOpen] = useState(false);
   return (
-    <div className="min-h-screen bg-[#F6F6F6]">
+    <div className="min-h-screen bg-[#F6F6F6] w-full overflow-x-hidden">
       <MobileSidebar open={mobileOpen} onClose={() => setMobileOpen(false)} />
 
       <div className="min-h-screen bg-white shadow-sm">
@@ -18,12 +18,23 @@ export default function DashboardLayout({ children }: Props) {
             <Sidebar />
           </aside>
 
-          <div className="flex flex-col">
-            <Topbar onOpenSidebar={() => setMobileOpen(true)}/>
-            <div className="px-6 pb-6">{children}</div>
+          <div className="relative">
+            <div className="fixed top-0 left-0 right-0 z-40 lg:left-67.5">
+              <Topbar onOpenSidebar={() => setMobileOpen(true)} />
+              <div className="w-full h-px bg-gray-100" />
+            </div>
+
+            <div className="px-6 pb-6 pt-26 lg:pt-28">
+              {children}
+            </div>
+    
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+{/* <div className="flex flex-col">
+              <Topbar onOpenSidebar={() => setMobileOpen(true)} />
+            <div className="px-6 pb-6">{children}</div> */}

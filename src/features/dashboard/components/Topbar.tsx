@@ -24,7 +24,7 @@ export default function Topbar({ title = "Dashboard", onOpenSidebar }: Props) {
     };
 
   return (
-    <div className="flex items-center justify-between gap-4 py-7.5 px-10">
+    <div className="flex items-center justify-between gap-2 lg:gap-4  lg:py-4.5 lg:px-8 py-3.5 px-4.5 bg-white">
       <div className="flex items-center gap-3">
         <button
           type="button"
@@ -43,7 +43,7 @@ export default function Topbar({ title = "Dashboard", onOpenSidebar }: Props) {
       <div className="flex items-center gap-11.25">
         <button
           type="button"
-          className="grid cursor-pointer place-items-center rounded-xl"
+          className="hidden cursor-pointer sm:grid place-items-center rounded-xl"
           aria-label="Search"
         >
           <img src={searchIcon} alt="Search" className="w-6 h-6" />
@@ -51,7 +51,7 @@ export default function Topbar({ title = "Dashboard", onOpenSidebar }: Props) {
 
         <button
           type="button"
-          className="grid cursor-pointer place-items-center rounded-xl"
+          className="hidden cursor-pointer sm:grid place-items-center rounded-xl"
           aria-label="Notifications"
         >
           <img src={notificationIcon} alt="Notifications" className="w-6 h-6" />
@@ -60,7 +60,7 @@ export default function Topbar({ title = "Dashboard", onOpenSidebar }: Props) {
         <div className="relative">
           <button
             type="button"
-            className="flex items-center w-[215px] gap-2 sm:gap-3 rounded-[100px] bg-[#FAFAFA] pl-1.75 pr-3.75 sm:px-3 py-1.5 text-sm text-slate-900 hover:bg-slate-50 cursor-pointer"
+            className="flex items-center max-w-55 gap-2 sm:gap-3 rounded-[100px] bg-[#FAFAFA] lg:pl-1.75 lg:pr-3.75 sm:px-3 py-1.5 px-1.5 text-sm text-slate-900 hover:bg-slate-50 cursor-pointer"
             aria-haspopup="menu"
             aria-expanded="false"
             onClick={() => setMenuOpen((v) => !v)}
@@ -73,7 +73,7 @@ export default function Topbar({ title = "Dashboard", onOpenSidebar }: Props) {
                       .map((p) => p[0]?.toUpperCase())
                       .join("")}
             </span>
-            <span className="hidden sm:block max-w-[120px] lg:max-w-[160px] truncate text-sm font-medium text-slate-900">
+            <span className="hidden text-sm font-medium truncate sm:block max-w-30 lg:max-w-40 text-slate-900">
               {profile?.fullName ?? 'User'}
             </span>
             <img

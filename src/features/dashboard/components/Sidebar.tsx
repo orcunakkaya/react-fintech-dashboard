@@ -49,7 +49,7 @@ export default function Sidebar() {
     navigate("/auth", { replace: true });
   };
   return (
-    <div className="h-full gap-8 flex flex-col px-6.25 pt-7.5 pb-25 bg-[#FAFAFA] rounded-2xl">
+    <div className="h-full lg:fixed w-67.5 gap-8 flex flex-col px-6.25 pt-7.5 pb-25 bg-[#FAFAFA]">
       <img src={logoSvg} alt="Fintech" className="h-7.5 w-[107.314px]" />
 
       <div className="flex flex-col justify-between flex-1">

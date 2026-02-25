@@ -12,14 +12,10 @@ export type Money = {
 };
 
 export type FinancialSummaryResponse = {
-  success: boolean;
-  message: string;
-  data: {
     totalBalance: Money;
     totalExpense: Money;
     totalSavings: Money;
     lastUpdated: string;
-  };
 };
 
 export type WorkingCapitalItem = {
@@ -30,9 +26,6 @@ export type WorkingCapitalItem = {
 };
 
 export type WorkingCapitalResponse = {
-  success: boolean;
-  message: string;
-  data: {
     period: string;
     currency: string;
     data: WorkingCapitalItem[];
@@ -41,7 +34,6 @@ export type WorkingCapitalResponse = {
       totalExpense: number;
       netBalance: number;
     };
-  };
 };
 
 export type WalletCard = {
@@ -80,16 +72,12 @@ export type RecentTransaction = {
 };
 
 export type RecentTransactionsResponse = {
-  success: boolean;
-  message: string;
-  data: {
     transactions: RecentTransaction[];
     summary: {
       totalIncome: number;
       totalExpense: number;
       count: number;
     };
-  };
 };
 
 export type ScheduledTransfer = {
@@ -112,4 +100,9 @@ export type ScheduledTransfersResponse = {
       count: number;
     };
   };
+};
+
+export type ApiResponse<T> = {
+  success: boolean;
+  data: T;
 };
