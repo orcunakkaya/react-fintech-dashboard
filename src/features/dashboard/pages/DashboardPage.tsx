@@ -4,6 +4,8 @@ import SummaryCard from "../components/SummaryCard";
 import SummaryCardSkeleton from "../components/SummaryCardSkeleton.tsx";
 import WorkingCapitalChart from "../components/WorkingCapitalChart";
 import RecentTransactionsCard from "../components/RecentTransactionsCard";
+import WalletCards from "../components/WalletCards";
+import ScheduledTransfers from "../components/ScheduledTransfers";
 
 export default function DashboardPage() {
   const { data: summary, isLoading: isSummaryLoading } = useFinancialSummary();
@@ -22,8 +24,7 @@ export default function DashboardPage() {
             <SummaryCardSkeleton />
           </div>
         )}
-        
-
+      
         {summary && (
           <article className="grid grid-cols-1 gap-4 lg:grid-cols-3" aria-label="Financial summary">
             <SummaryCard
@@ -51,15 +52,13 @@ export default function DashboardPage() {
             />
           </article>
         )}
-        {summary && <WorkingCapitalChart />}
-        {summary && <RecentTransactionsCard />}
+          <WorkingCapitalChart />
+          <RecentTransactionsCard />
         </div>
 
         <aside className="flex flex-col gap-6">
-          <div className="h-56 p-6 bg-white border rounded-2xl">My Wallet</div>
-          <div className="h-56 p-6 bg-white border rounded-2xl">
-            Scheduled Transfers
-          </div>
+          <WalletCards />
+          <ScheduledTransfers />
         </aside>
       </div>
     </DashboardLayout>

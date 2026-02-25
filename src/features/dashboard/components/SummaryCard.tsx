@@ -20,7 +20,6 @@ export default function SummaryCard({
 }: Props) {
   const isPositive = trend === "up";
  
-  // theme and isPositive based icon selection
   const iconSrc = isPositive
     ? theme === "light"
       ? walletIcon

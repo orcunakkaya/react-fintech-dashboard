@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import logoutSvg from "@/assets/dashboard/logout-icon.svg";
 import { logout } from "@/features/auth/store/auth.actions";
+
 type Props = {
   title?: string;
   onOpenSidebar: () => void;
@@ -87,7 +88,7 @@ export default function Topbar({ title = "Dashboard", onOpenSidebar }: Props) {
           {menuOpen && (
                   <div
                     role="menu"
-                    className="absolute right-0 mt-2 w-[215px] rounded-xl border border-slate-200 bg-white p-1 shadow-lg z-50"
+                    className="absolute right-0 mt-2 w-53.75 rounded-xl border border-slate-200 bg-white p-1 shadow-lg z-50"
                   >
                     <button
                       type="button"

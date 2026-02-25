@@ -50,11 +50,7 @@ export type WalletCard = {
 };
 
 export type WalletResponse = {
-  success: boolean;
-  message: string;
-  data: {
-    cards: WalletCard[];
-  };
+  cards: WalletCard[];
 };
 
 export type TransactionStatus = "completed" | "pending" | "failed" | string;
@@ -91,15 +87,11 @@ export type ScheduledTransfer = {
 };
 
 export type ScheduledTransfersResponse = {
-  success: boolean;
-  message: string;
-  data: {
     transfers: ScheduledTransfer[];
     summary: {
       totalScheduledAmount: number;
       count: number;
     };
-  };
 };
 
 export type ApiResponse<T> = {

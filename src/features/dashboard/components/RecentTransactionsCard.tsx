@@ -24,8 +24,11 @@ function formatAmount(amount: number, currency: string) {
 }
 
 export default function RecentTransactionsTable({ limit = 3 }: Props) {
-  const trx = useRecentTransactions();
+  const { data, isLoading, isError, refetch } = useRecentTransactions();
   const [currentLimit, setCurrentLimit] = useState(limit);
+
+  const transactions = data?.transactions ?? [];
+  const visibleTransactions = transactions.slice(0, currentLimit);
 
   const columns = useMemo(
     () => [
@@ -77,8 +80,7 @@ export default function RecentTransactionsTable({ limit = 3 }: Props) {
     []
   );
 
-  // Loading
-  if (trx.isLoading) {
+  if (isLoading) {
     return (
       <div className="bg-white p-6 border border-[#F5F5F5] rounded-[10px]">
         <div className="flex items-center justify-between mb-4">
@@ -93,8 +95,7 @@ export default function RecentTransactionsTable({ limit = 3 }: Props) {
     );
   }
 
-  // Error
-  if (trx.isError) {
+  if (isError) {
     return (
       <div className="bg-white p-6 border border-[#F5F5F5] rounded-[10px]">
         <h2 className="text-lg font-semibold text-[#1B212D]">Recent Transaction</h2>
@@ -102,7 +103,7 @@ export default function RecentTransactionsTable({ limit = 3 }: Props) {
           Failed to load recent transactions.
           <button
             type="button"
-            onClick={() => trx.refetch()}
+            onClick={() => refetch()}
             className="ml-2 text-xs font-semibold text-[#29A073] hover:underline"
           >
             Retry
@@ -111,9 +112,6 @@ export default function RecentTransactionsTable({ limit = 3 }: Props) {
       </div>
     );
   }
-
-  const transactions = trx.data?.transactions ?? [];
-  const visibleTransactions = transactions.slice(0, currentLimit);
 
   return (
     <section

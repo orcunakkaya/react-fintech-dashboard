@@ -7,7 +7,7 @@ type Props = {
 };
 
 export default function MobileSidebar({ open, onClose }: Props) {
-  // ESC ile kapat
+
   useEffect(() => {
     if (!open) return;
 
@@ -19,7 +19,6 @@ export default function MobileSidebar({ open, onClose }: Props) {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open, onClose]);
 
-  // Scroll lock
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -49,7 +48,7 @@ export default function MobileSidebar({ open, onClose }: Props) {
       {/* Drawer */}
       <div
         className={[
-          "absolute left-0 top-0 h-full w-[280px] bg-white shadow-xl transition-transform",
+          "absolute left-0 top-0 h-full w-70 bg-white shadow-xl transition-transform",
           open ? "translate-x-0" : "-translate-x-full",
         ].join(" ")}
         role="dialog"
