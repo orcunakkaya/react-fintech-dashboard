@@ -34,7 +34,3 @@ export default function DashboardLayout({ children }: Props) {
     </div>
   );
 }
-
-{/* <div className="flex flex-col">
-              <Topbar onOpenSidebar={() => setMobileOpen(true)} />
-            <div className="px-6 pb-6">{children}</div> */}

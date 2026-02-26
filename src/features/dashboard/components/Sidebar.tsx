@@ -1,42 +1,46 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import homeIcon from "@/assets/dashboard/home-icon.svg";
-import transactionsIcon from "@/assets/dashboard/transactions-icon.svg";
-import invoicesIcon from "@/assets/dashboard/invoices-icon.svg";
-import walletIcon from "@/assets/dashboard/my-wallets-icon.svg";
-import settingsIcon from "@/assets/dashboard/settings-icon.svg";
 import logoSvg from "@/assets/auth/fintech-logo.svg";
 import helpSvg from "@/assets/dashboard/help-icon.svg";
 import logoutSvg from "@/assets/dashboard/logout-icon.svg";
 
+import HomeIcon from "@/shared/ui/Icons/HomeIcon";
+import TransactionsIcon from "@/shared/ui/Icons/TransactionsIcon";
+import InvoicesIcon from "@/shared/ui/Icons/InvoicesIcon";
+import WalletIcon from "@/shared/ui/Icons/WalletIcon";
+import SettingsIcon from "@/shared/ui/Icons/SettingsIcon";
+
 import { logout } from "@/features/auth/store/auth.actions";
 
-const navItems = [
-  { to: "/dashboard", label: "Dashboard", isActive: true, icon: homeIcon },
+type IconProps = { className?: string };
+type NavItem = {
+  to: string;
+  label: string;
+  icon: React.ComponentType<IconProps>;
+};
+
+const navItems: NavItem[] = [
+  { to: "/dashboard", label: "Dashboard", icon: HomeIcon },
   {
     to: "/transactions",
     label: "Transactions",
-    isActive: false,
-    icon: transactionsIcon,
+    icon: TransactionsIcon,
   },
   {
     to: "/invoices",
     label: "Invoices",
-    isActive: false,
-    icon: invoicesIcon,
+    icon: InvoicesIcon,
   },
   {
     to: "/wallets",
     label: "My Wallets",
-    isActive: false,
-    icon: walletIcon,
+    icon: WalletIcon,
   },
   {
     to: "/settings",
     label: "Settings",
-    isActive: false,
-    icon: settingsIcon,
+    icon: SettingsIcon,
   },
 ];
 
@@ -54,23 +58,32 @@ export default function Sidebar() {
 
       <div className="flex flex-col justify-between flex-1">
         <nav className="flex flex-col gap-0.5">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                [
-                  "flex w-full items-center gap-3 rounded-lg py-3.5 pl-3.75 pr-20.25 text-left text-sm",
-                  isActive
-                    ? "bg-[#C8EE44] text-[#1B212D] font-semibold"
-                    : "text-gray-500 font-medium hover:bg-white",
-                ].join(" ")
-              }
-            >
-              <img src={item.icon} alt={`${item.label} icon`} className="w-5 h-5" />
-              <span>{item.label}</span>
-            </NavLink>
-          ))}
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  [
+                    "flex w-full items-center gap-3 rounded-lg py-3.5 pl-3.75 pr-20.25 text-left text-sm",
+                    isActive
+                      ? "bg-[#C8EE44] text-[#1B212D] font-semibold"
+                      : "text-gray-500 font-medium hover:bg-white",
+                  ].join(" ")
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <Icon
+                      className={`w-5 h-5 ${isActive ? "text-[#1B212D]" : "text-[#929EAE]"}`}
+                    />
+                    <span>{item.label}</span>
+                  </>
+                )}
+              </NavLink>
+            );
+          })}
         </nav>
         <div className="flex flex-col gap-0.5">
           <button

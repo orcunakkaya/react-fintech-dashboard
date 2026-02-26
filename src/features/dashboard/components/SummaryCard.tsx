@@ -3,6 +3,7 @@ import walletActiveIcon from "@/assets/dashboard/summary/wallet-add-active.svg";
 import walletNegIcon from "@/assets/dashboard/summary/wallet-neg.svg";
 import walletNegActiveIcon from "@/assets/dashboard/summary/wallet-neg-active.svg";
 import { formatMoney } from "@/shared/lib/formatters/formatMoney";
+import Skeleton from "@/shared/ui/skeleton/Skeleton";
 
 type Props = {
   title: string;
@@ -10,6 +11,7 @@ type Props = {
   currency: string;
   trend?: "up" | "down";
   theme: "light" | "dark";
+  isLoading: boolean
 };
 
 export default function SummaryCard({
@@ -17,7 +19,8 @@ export default function SummaryCard({
   amount,
   currency,
   trend,
-  theme
+  theme,
+  isLoading
 }: Props) {
   const isPositive = trend === "up";
  
@@ -28,6 +31,15 @@ export default function SummaryCard({
     : theme === "light"
     ? walletNegIcon
     : walletNegActiveIcon;
+
+    if (isLoading) {
+        return (
+          <div className="flex flex-col gap-3.75 p-6 bg-[#F8F8F8] animate-pulse rounded-2xl">
+            <Skeleton className="relative w-1/2 h-2.5" />
+            <Skeleton className="relative w-full h-2.5" />
+          </div>
+        );
+      }
 
   return ( 
     <>

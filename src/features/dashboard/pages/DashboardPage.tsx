@@ -1,7 +1,6 @@
 import DashboardLayout from "@/app/layouts/DashboardLayout";
 import { useFinancialSummary } from "../hooks/useFinancialSummary";
 import SummaryCard from "../components/SummaryCard";
-import SummaryCardSkeleton from "../components/SummaryCardSkeleton.tsx";
 import WorkingCapitalChart from "../components/WorkingCapitalChart";
 import RecentTransactionsCard from "../components/RecentTransactionsCard";
 import WalletCards from "../components/WalletCards";
@@ -15,16 +14,6 @@ export default function DashboardPage() {
       <div className="w-full max-w-full grid grid-cols-1 gap-4 sm:gap-6 xl:grid-cols-[1fr_minmax(0,400px)]">
 
         <div className="min-w-0 space-y-4 sm:space-y-6">
-
-        
-        {isSummaryLoading && (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <SummaryCardSkeleton />
-            <SummaryCardSkeleton/>
-            <SummaryCardSkeleton />
-          </div>
-        )}
-      
         {summary && (
           <article className="grid grid-cols-1 gap-4 lg:grid-cols-3" aria-label="Financial summary">
             <SummaryCard
@@ -33,6 +22,7 @@ export default function DashboardPage() {
               currency={summary.totalBalance.currency}
               trend={summary?.totalBalance?.change?.trend}
               theme="dark"
+              isLoading={isSummaryLoading}
             />
 
             <SummaryCard
@@ -41,6 +31,7 @@ export default function DashboardPage() {
               currency={summary.totalExpense.currency}
               trend={summary?.totalExpense?.change?.trend}
               theme="light"
+              isLoading={isSummaryLoading}
             />
 
             <SummaryCard
@@ -49,6 +40,7 @@ export default function DashboardPage() {
               currency={summary.totalSavings.currency}
               trend={summary.totalSavings.change?.trend}
               theme="light"
+              isLoading={isSummaryLoading}
             />
           </article>
         )}

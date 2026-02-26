@@ -10,6 +10,8 @@ import {
 import { useWorkingCapital } from "../hooks/useWorkingCapital";
 import expandIcon from "@/assets/dashboard/expand.svg";
 import ApiErrorState from "@/shared/ui/ApiErrorState";
+import { formatMoney } from "@/shared/lib/formatters/formatMoney";
+import { formatMonthLabel } from "@/shared/lib/formatters/formatMonthLabel";
 
 export default function WorkingCapitalChart() {
 
@@ -27,20 +29,6 @@ export default function WorkingCapitalChart() {
       return `${(value / 1000).toFixed(0)}K`
     }
     return value.toString()
-  }
-
-  const formatMonthLabel = (month: string) => {
-    if (!month) return ''
-    try {
-      const date = new Date(month)
-      if (isNaN(date.getTime())) {
-        return month
-      }
-      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-      return `${monthNames[date.getMonth()]} ${date.getDate()}`
-    } catch {
-      return month
-    }
   }
 
   if (isLoading) {
@@ -61,10 +49,16 @@ export default function WorkingCapitalChart() {
     );
   }
 
+  const formatTooltipValue = (value: number | string | undefined) => {
+    if (value == null) return "-";
+    const num = typeof value === "number" ? value : Number(value);
+    return formatMoney(num, { currency: data?.currency ?? "TRY" });
+  };
+
   return (
      <section className="bg-white py-5 pr-4.75 pl-6.25  border border-[#F5F5F5] rounded-[10px]" aria-labelledby="working-capital-heading">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h2 id="working-capital-heading" className="text-lg font-semibold text-[#1B212D] dark:text-white">Working Capital</h2>
+        <h2 id="working-capital-heading" className="text-lg font-semibold text-[#1B212D]">Working Capital</h2>
         <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-8">
           <div className="flex items-center gap-4 sm:gap-8" role="list" aria-label="Chart legend">
             <div className="flex items-center gap-1.5" role="listitem">
@@ -83,7 +77,7 @@ export default function WorkingCapitalChart() {
         </div>
       </div>
       <div className="mt-4 h-50 sm:h-62.5">
-        {chartData?.length === 0 ? (
+        {!data || chartData?.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <p className="text-sm text-slate-500">No data available.</p>
           </div>
@@ -104,7 +98,8 @@ export default function WorkingCapitalChart() {
                 domain={[0, 'dataMax']}
               />
               <Tooltip
-                labelFormatter={(label) => `Month: ${formatMonthLabel(label)}`}
+                formatter={formatTooltipValue}
+                labelFormatter={(label) => `Month: ${formatMonthLabel(String(label))}`}
                 contentStyle={{
                   backgroundColor: 'white',
                   border: '1px solid #e2e8f0',

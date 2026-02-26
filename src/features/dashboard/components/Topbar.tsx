@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useProfile } from "@/features/auth/hooks/useProfile";
+import hamburgerIcon from "@/assets/dashboard/hamburger-menu-icon.svg"
 import searchIcon from "@/assets/dashboard/search-icon.svg";
 import notificationIcon from "@/assets/dashboard/notification-icon.svg";
 
@@ -30,10 +31,10 @@ export default function Topbar({ title = "Dashboard", onOpenSidebar }: Props) {
         <button
           type="button"
           onClick={onOpenSidebar}
-          className="grid bg-white border border-gray-200 h-11 w-11 place-items-center rounded-xl lg:hidden"
+          className="grid bg-white border border-gray-200 cursor-pointer h-11 w-11 place-items-center rounded-xl lg:hidden"
           aria-label="Open menu"
         >
-          ☰
+          <img src={hamburgerIcon} alt="menu" className="w-5 h-5" />
         </button>
 
         <h1 className="text-[25px] font-semibold leading-none text-[#1B212D]">

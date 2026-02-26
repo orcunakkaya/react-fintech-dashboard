@@ -36,7 +36,7 @@ export default function MobileSidebar({ open, onClose }: Props) {
       ].join(" ")}
       aria-hidden={!open}
     >
-      {/* Overlay */}
+
       <div
         className={[
           "absolute inset-0 bg-black/30 transition-opacity",
@@ -45,7 +45,6 @@ export default function MobileSidebar({ open, onClose }: Props) {
         onClick={onClose}
       />
 
-      {/* Drawer */}
       <div
         className={[
           "absolute left-0 top-0 h-full w-70 bg-white shadow-xl transition-transform",

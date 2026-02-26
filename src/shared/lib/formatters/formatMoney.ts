@@ -3,7 +3,7 @@ import { normalizeCurrency } from "./normalizeCurrency";
 
 type Options = {
   locale?: string;
-  currency?: string; // TRY, USD...
+  currency?: string;
   maximumFractionDigits?: number;
   minimumFractionDigits?: number;
   signDisplay?: "auto" | "always" | "exceptZero" | "never";

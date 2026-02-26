@@ -17,7 +17,6 @@ export default function Input({
 
   return (
     <div className="grid">
-      {/* Label */}
       <label
         htmlFor={inputId}
         className="text-sm p-2.5 pl-0 font-medium leading-none text-gray-900"
@@ -25,7 +24,6 @@ export default function Input({
         {label}
       </label>
 
-      {/* Input */}
       <input
         id={inputId}
         className={clsx(
@@ -44,7 +42,6 @@ export default function Input({
         {...props}
       />
 
-      {/* Error */}
       {error && (
         <p className="mt-1.5 text-xs leading-none text-red-600">{error}</p>
       )}
