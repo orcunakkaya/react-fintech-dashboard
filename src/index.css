@@ -14,3 +14,14 @@ body {
   min-height: 100vh;
   font-family: "Kumbh Sans", sans-serif;
 }
+
+
+@keyframes skeletonShimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton-shimmer {
+  animation: skeletonShimmer 1.4s ease-in-out infinite;
+}

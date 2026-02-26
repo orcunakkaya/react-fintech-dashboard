@@ -1,51 +1,26 @@
 import { useScheduledTransfers } from "../hooks/useScheduledTransfers";
 import { formatDateTime } from "@/shared/lib/formatters/formatDateTime";
 import { formatMoney } from "@/shared/lib/formatters/formatMoney";
-
-function SkeletonRow() {
-  return <div className="h-16 bg-gray-200 animate-pulse rounded-xl" />;
-}
+import ApiErrorState from "@/shared/ui/ApiErrorState";
+import SectionLoading from "@/shared/ui/skeleton/SectionLoading";
 
 export default function ScheduledTransfers() {
   const { data: scheduledTransfers, isLoading, isError, refetch } = useScheduledTransfers();
   const transfers = scheduledTransfers?.transfers ?? [];
-  
+
   if (isLoading) {
-    return (
-      <div className="bg-white p-6 border border-[#F5F5F5] rounded-[10px]">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-[#1B212D]">
-            Scheduled Transfers
-          </h2>
-        </div>
-        <div className="space-y-3">
-          <SkeletonRow />
-          <SkeletonRow />
-          <SkeletonRow />
-        </div>
-      </div>
-    );
+    return <SectionLoading title="Scheduled Transfers" rows={3} />;
   }
 
   if (isError) {
-    return (
-      <div className="bg-white p-6 border border-[#F5F5F5] rounded-[10px]">
-        <h2 className="text-lg font-semibold text-[#1B212D]">
-          Scheduled Transfers
-        </h2>
-        <div className="p-4 mt-4 text-sm text-red-600 border border-dashed rounded-xl">
-          Failed to load scheduled transfers.
-          <button
-            type="button"
-            onClick={() => refetch()}
-            className="ml-2 text-xs font-semibold text-[#29A073] hover:underline"
-          >
-            Retry
-          </button>
-        </div>
-      </div>
-    );
-  }
+  return (
+    <ApiErrorState
+      title="Scheduled Transfers"
+      message="Failed to load scheduled transfers."
+      onRetry={refetch}
+    />
+  );
+}
 
   return (
     <section

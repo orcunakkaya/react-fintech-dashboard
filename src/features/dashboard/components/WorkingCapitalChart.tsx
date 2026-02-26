@@ -9,11 +9,11 @@ import {
 } from "recharts";
 import { useWorkingCapital } from "../hooks/useWorkingCapital";
 import expandIcon from "@/assets/dashboard/expand.svg";
-
+import ApiErrorState from "@/shared/ui/ApiErrorState";
 
 export default function WorkingCapitalChart() {
 
-  const { data } = useWorkingCapital();
+  const { data, isError, isLoading, refetch } = useWorkingCapital();
 
   const chartData = data?.data.map((item) => ({
     month: item.month,
@@ -41,6 +41,24 @@ export default function WorkingCapitalChart() {
     } catch {
       return month
     }
+  }
+
+  if (isLoading) {
+    return (
+      <section className="bg-white py-5 pr-4.75 pl-6.25 border border-[#F5F5F5] rounded-[10px]">
+        <div className="h-62.5 animate-pulse rounded-xl bg-gray-200" />
+      </section>
+    );
+  }
+
+  if (isError) {
+    return (
+      <ApiErrorState
+        title="Working Capital"
+        message="Failed to load working capital."
+        onRetry={refetch}
+      />
+    );
   }
 
   return (

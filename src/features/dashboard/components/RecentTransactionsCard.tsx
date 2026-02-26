@@ -3,14 +3,12 @@ import { useRecentTransactions } from "../hooks/useRecentTransactions";
 import type { RecentTransaction } from "../types/dashboard.types";
 import { formatDate } from "@/shared/lib/formatters/formatDate";
 import { formatMoney } from "@/shared/lib/formatters/formatMoney";
+import ApiErrorState from "@/shared/ui/ApiErrorState";
+import SectionLoading from "@/shared/ui/skeleton/SectionLoading";
 
 type Props = {
   limit?: number;
 };
-
-function SkeletonRow() {
-  return <div className="h-16 bg-gray-200 animate-pulse rounded-xl" />;
-}
 
 export default function RecentTransactionsTable({ limit = 3 }: Props) {
   const { data, isLoading, isError, refetch } = useRecentTransactions();
@@ -69,38 +67,19 @@ export default function RecentTransactionsTable({ limit = 3 }: Props) {
     []
   );
 
-  if (isLoading) {
-    return (
-      <div className="bg-white p-6 border border-[#F5F5F5] rounded-[10px]">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-[#1B212D]">Recent Transaction</h2>
-        </div>
-        <div className="space-y-3">
-          <SkeletonRow />
-          <SkeletonRow />
-          <SkeletonRow />
-        </div>
-      </div>
-    );
-  }
+if (isLoading) {
+  return <SectionLoading title="Recent Transaction" rows={3} />;
+}
 
-  if (isError) {
-    return (
-      <div className="bg-white p-6 border border-[#F5F5F5] rounded-[10px]">
-        <h2 className="text-lg font-semibold text-[#1B212D]">Recent Transaction</h2>
-        <div className="p-4 mt-4 text-sm text-red-600 border border-dashed rounded-xl">
-          Failed to load recent transactions.
-          <button
-            type="button"
-            onClick={() => refetch()}
-            className="ml-2 text-xs font-semibold text-[#29A073] hover:underline"
-          >
-            Retry
-          </button>
-        </div>
-      </div>
-    );
-  }
+if (isError) {
+  return (
+    <ApiErrorState
+      title="Recent Transaction"
+      message="Failed to load recent transactions."
+      onRetry={refetch}
+    />
+  );
+}
 
   return (
     <section

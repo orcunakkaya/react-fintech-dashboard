@@ -3,10 +3,8 @@ import visaIcon from "@/assets/dashboard/visa.svg";
 import mastercardIcon from "@/assets/dashboard/mastercard.svg";
 import walletChipIcon from "@/assets/dashboard/walletChip.svg";
 import walletWifiIcon from "@/assets/dashboard/walletWifi.svg";
-
-function Skeleton({ className = "" }: { className?: string }) {
-  return <div className={`animate-pulse bg-gray-200 ${className}`} />;
-}
+import ApiErrorState from "@/shared/ui/ApiErrorState";
+import SectionLoading from "@/shared/ui/skeleton/SectionLoading";
 
 export default function WalletCards() {
   const { data, isLoading, isError, refetch } = useWalletCards();
@@ -14,34 +12,17 @@ export default function WalletCards() {
   const cards = data?.cards ?? [];
 
   if (isLoading) {
-    return (
-      <div className="space-y-4">
-        <h2 className="text-lg font-semibold text-[#1B212D]">Wallet</h2>
-        <div className="relative h-80.5">
-          <Skeleton className="absolute left-0 top-0 h-52.5 w-full max-w-88.5 rounded-2xl" />
-          <Skeleton className="absolute left-3.75 top-37.5 h-43 w-full max-w-81 rounded-2xl" />
-        </div>
-      </div>
-    );
+    return <SectionLoading title="Wallet" cardMode />;
   }
 
-  if (isError) {
-    return (
-      <div className="p-4 bg-white border rounded-2xl border-slate-200">
-        <p className="text-sm text-red-600">Failed to load wallet cards.</p>
-        <button
-          type="button"
-          onClick={() => refetch()}
-          className="mt-2 text-xs font-semibold text-[#29A073] hover:underline"
-        >
-          Retry
-        </button>
-      </div>
-    );
-  }
-
-  if (isError) {
-  throw new Error("Failed to load working capital");
+if (isError) {
+  return (
+    <ApiErrorState
+      message="Failed to load wallet cards."
+      onRetry={refetch}
+      className="p-4 bg-white border rounded-2xl border-slate-200"
+    />
+  );
 }
 
   if (cards.length === 0) {
@@ -58,7 +39,7 @@ export default function WalletCards() {
         Wallet
       </h2>
 
-      <div className="relative h-80.5 w-full overflow-hidden lg:grid lg:place-items-center">
+      <div className="relative h-80.5 w-full overflow-hidden ">
         {cards.map((card, index) => {
           const isFirst = index === 0;
 
