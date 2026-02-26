@@ -20,7 +20,6 @@ export async function getWorkingCapital(): Promise<WorkingCapitalResponse> {
 
 export async function getWalletCards(): Promise<WalletResponse> {
   const res = await http.get<ApiResponse<WalletResponse>>("/financial/wallet");
-  console.log("API Response:", res);
   return res.data.data;
 }
 

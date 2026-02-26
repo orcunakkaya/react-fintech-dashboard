@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import { useRecentTransactions } from "../hooks/useRecentTransactions";
 import type { RecentTransaction } from "../types/dashboard.types";
+import { formatDate } from "@/shared/lib/formatters/formatDate";
+import { formatMoney } from "@/shared/lib/formatters/formatMoney";
 
 type Props = {
   limit?: number;
@@ -8,19 +10,6 @@ type Props = {
 
 function SkeletonRow() {
   return <div className="h-16 bg-gray-200 animate-pulse rounded-xl" />;
-}
-
-function formatDate(iso: string) {
-  return new Intl.DateTimeFormat("tr-TR", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }).format(new Date(iso));
-}
-
-function formatAmount(amount: number, currency: string) {
-  const v = Math.abs(amount);
-  return `${v.toLocaleString("tr-TR")} ${currency}`;
 }
 
 export default function RecentTransactionsTable({ limit = 3 }: Props) {
@@ -63,7 +52,7 @@ export default function RecentTransactionsTable({ limit = 3 }: Props) {
         align: "center" as const,
         accessor: (t: { amount: number; currency: string }) => (
           <span className="text-sm font-semibold text-slate-900">
-            {formatAmount(t.amount, t.currency)}
+            {formatMoney(Math.abs(t.amount), { currency: t.currency, maximumFractionDigits: 2 })}
           </span>
         ),
       },

@@ -1,32 +1,15 @@
 import { useScheduledTransfers } from "../hooks/useScheduledTransfers";
+import { formatDateTime } from "@/shared/lib/formatters/formatDateTime";
+import { formatMoney } from "@/shared/lib/formatters/formatMoney";
 
 function SkeletonRow() {
   return <div className="h-16 bg-gray-200 animate-pulse rounded-xl" />;
 }
 
-function formatDateTime(iso: string) {
-  return new Intl.DateTimeFormat("tr-TR", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(new Date(iso));
-}
-
-function formatAmount(amount: number, currency: string) {
-  const abs = Math.abs(amount);
-  const formatted = new Intl.NumberFormat("tr-TR", {
-    style: "currency",
-    currency: currency === "$" ? "USD" : currency, // API bazen "$" yolluyor
-    maximumFractionDigits: 2,
-  }).format(abs);
-  return `- ${formatted}`;
-}
-
 export default function ScheduledTransfers() {
   const { data: scheduledTransfers, isLoading, isError, refetch } = useScheduledTransfers();
   const transfers = scheduledTransfers?.transfers ?? [];
+  
   if (isLoading) {
     return (
       <div className="bg-white p-6 border border-[#F5F5F5] rounded-[10px]">
@@ -130,7 +113,7 @@ export default function ScheduledTransfers() {
 
               <div className="text-right shrink-0">
                 <p className="text-base font-semibold text-black">
-                  {formatAmount(transfer.amount, transfer.currency)}
+                  {`- ${formatMoney(Math.abs(transfer.amount), { currency: transfer.currency, maximumFractionDigits: 2 })}`}
                 </p>
               </div>
             </div>

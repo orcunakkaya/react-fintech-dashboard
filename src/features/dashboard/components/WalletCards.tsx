@@ -40,6 +40,10 @@ export default function WalletCards() {
     );
   }
 
+  if (isError) {
+  throw new Error("Failed to load working capital");
+}
+
   if (cards.length === 0) {
     return (
       <div className="flex h-80.5 items-center justify-center rounded-2xl border border-slate-200 bg-white">
