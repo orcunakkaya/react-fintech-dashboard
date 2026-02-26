@@ -9,6 +9,7 @@ import TransactionsPage from "@/features/dashboard/pages/TransactionsPage";
 import InvoicesPage from "@/features/dashboard/pages/InvoicesPage";
 import MyWalletsPage from "@/features/dashboard/pages/MyWalletsPage";
 import SettingsPage from "@/features/dashboard/pages/SettingsPage";
+import NotFoundPage from "@/features/dashboard/pages/NotFoundPage";
 
 export const router = createBrowserRouter([
   { path: "/", element: <RootRedirect /> },
@@ -24,6 +25,7 @@ export const router = createBrowserRouter([
     { path: "/invoices", element: <InvoicesPage /> },
     { path: "/wallets", element: <MyWalletsPage /> },
     { path: "/settings", element: <SettingsPage /> },
+    { path: "*", element: <NotFoundPage /> },
   ],
   },
   { path: "*", element: <AuthPage /> },
