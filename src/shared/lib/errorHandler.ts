@@ -1,18 +1,69 @@
-import axios from "axios";
+import axios, { type AxiosError } from "axios";
 
-export function getErrorMessage(error: unknown): string {
-  if (axios.isAxiosError(error)) {
-    const data = error.response?.data as { message?: unknown } | undefined;
+const DEFAULT_ERROR_MESSAGE = "Something went wrong";
 
-    // API çoğunlukla { message: "..."} veya { success:false, message:"..." } döner
-    if (data?.message && typeof data.message === "string") return data.message;
+type ApiErrorPayload = {
+  message?: unknown;
+  error?: unknown;
+};
 
-    return error.response?.status
-      ? `Request failed (${error.response.status})`
-      : "Network error";
+type ErrorHandlerOptions = {
+  fallbackMessage?: string;
+  log?: boolean;
+};
+
+function getMessageFromPayload(payload?: ApiErrorPayload): string | null {
+  if (!payload) return null;
+
+  if (typeof payload.message === "string" && payload.message.trim()) {
+    return payload.message;
   }
 
-  if (error instanceof Error) return error.message;
+  if (typeof payload.error === "string" && payload.error.trim()) {
+    return payload.error;
+  }
 
-  return "Something went wrong";
+  return null;
+}
+
+function getAxiosErrorMessage(error: AxiosError<ApiErrorPayload>): string {
+  const payloadMessage = getMessageFromPayload(error.response?.data);
+  if (payloadMessage) return payloadMessage;
+
+  if (typeof error.message === "string" && error.message.trim()) {
+    return error.message;
+  }
+
+  if (error.response?.status) {
+    return `Request failed (${error.response.status})`;
+  }
+
+  return "Network error";
+}
+
+export function getErrorMessage(
+  error: unknown,
+  fallbackMessage = DEFAULT_ERROR_MESSAGE
+): string {
+  if (axios.isAxiosError(error)) return getAxiosErrorMessage(error);
+
+  if (error instanceof Error && error.message.trim()) return error.message;
+
+  if (typeof error === "string" && error.trim()) return error;
+
+  return fallbackMessage;
+}
+
+export function errorHandler(
+  error: unknown,
+  options: ErrorHandlerOptions = {}
+): string {
+  const { fallbackMessage = DEFAULT_ERROR_MESSAGE, log = false } = options;
+  const message = getErrorMessage(error, fallbackMessage);
+
+  if (log) {
+    console.error("Handled error:", error);
+  }
+
+  return message;
 }

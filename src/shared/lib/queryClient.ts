@@ -1,17 +1,17 @@
-import { QueryClient, QueryCache, MutationCache } from "@tanstack/react-query";
+import { MutationCache, QueryCache, QueryClient } from "@tanstack/react-query";
 import { handleApiError } from "@/shared/lib/errors/handleApiError";
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error, query) => {
-      // İstersen sessiz query’ler hariç tutabilirsin:
       const silent = query.meta?.silent === true;
       if (!silent) handleApiError(error, "Failed to load data");
     },
   }),
   mutationCache: new MutationCache({
-    onError: (error) => {
-      handleApiError(error, "Action failed");
+    onError: (error, _variables, _context, mutation) => {
+      const silent = mutation.meta?.silent === true;
+      if (!silent) handleApiError(error, "Action failed");
     },
   }),
   defaultOptions: {

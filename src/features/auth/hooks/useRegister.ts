@@ -4,5 +4,6 @@ import { registerUser } from "../api/auth.api";
 export function useRegister() {
   return useMutation({
     mutationFn: registerUser,
+    meta: { silent: true }
   });
 }

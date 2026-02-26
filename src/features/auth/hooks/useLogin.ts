@@ -4,5 +4,6 @@ import { loginUser } from "../api/auth.api";
 export function useLogin() {
   return useMutation({
     mutationFn: loginUser,
+    meta: { silent: true }
   });
 }

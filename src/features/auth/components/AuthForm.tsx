@@ -67,7 +67,7 @@ export default function AuthForm({ mode, setMode }: AuthFormProps) {
     toast.success(res.message || "Login successful");
     navigate("/dashboard", { replace: true });
   } catch (err) {
-    toast.error(getErrorMessage(err));
+    toast.error(getErrorMessage(err, "Authentication failed"));
   } finally {
     helpers.setSubmitting(false);
   }

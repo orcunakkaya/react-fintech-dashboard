@@ -8,7 +8,7 @@ export function useProfile() {
   return useQuery({
     queryKey: ["profile"],
     queryFn: getProfile,
-    enabled: !!token, // token yoksa istek atma
+    enabled: !!token,
     retry: 1,
   });
 }

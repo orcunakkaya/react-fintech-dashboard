@@ -1,14 +1,11 @@
 import { toast } from "react-toastify";
-import type { AxiosError } from "axios";
+import { errorHandler } from "@/shared/lib/errorHandler";
 
-export function handleApiError(error: unknown, fallbackMessage = "Something went wrong") {
-  // Axios kullanıyorsan:
-  const err = error as AxiosError<any>;
-
-  const message =
-    err?.response?.data?.message ||
-    err?.message ||
-    fallbackMessage;
-
+export function handleApiError(
+  error: unknown,
+  fallbackMessage = "Something went wrong"
+): string {
+  const message = errorHandler(error, { fallbackMessage });
   toast.error(message);
+  return message;
 }
