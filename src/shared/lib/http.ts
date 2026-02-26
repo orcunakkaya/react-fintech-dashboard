@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const http = axios.create({
-  baseURL: "https://case.nodelabs.dev/api",
+  baseURL: import.meta.env.VITE_API_BASE_URL ?? "https://case.nodelabs.dev/api",
   headers: {
     "Content-Type": "application/json",
   },
