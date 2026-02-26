@@ -4,7 +4,7 @@ import hamburgerIcon from "@/assets/dashboard/hamburger-menu-icon.svg"
 import searchIcon from "@/assets/dashboard/search-icon.svg";
 import notificationIcon from "@/assets/dashboard/notification-icon.svg";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import logoutSvg from "@/assets/dashboard/logout-icon.svg";
 import { logout } from "@/features/auth/store/auth.actions";
@@ -14,10 +14,21 @@ type Props = {
   onOpenSidebar: () => void;
 };
 
-export default function Topbar({ title = "Dashboard", onOpenSidebar }: Props) {
+const TITLE_BY_PATH: Record<string, string> = {
+  "/dashboard": "Dashboard",
+  "/transactions": "Transactions",
+  "/invoices": "Invoices",
+  "/wallets": "My Wallets",
+  "/settings": "Settings",
+};
+
+export default function Topbar({ onOpenSidebar }: Props) {
   const { data: profile } = useProfile();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const location = useLocation();
+  const title = TITLE_BY_PATH[location.pathname] ?? "Dashboard";
 
   const handleLogout = () => {
       logout();
